@@ -21,24 +21,24 @@ const fontMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com'),
-  title: 'ICU-B Connect | Public Landing',
+  title: 'ICU-B Connect | Clinical CRRT Monitoring Platform',
   description:
-    'A public-facing landing page for ICU-B Connect: clinical telemetry, workflow clarity, and connector-ready architecture for CRRT monitoring.',
+    'Real-time PrismaFlex monitoring for ICU: treatment visibility, alarm severity, pressure trends, and audit-ready clinical workflow.',
   icons: {
     icon: '/favicon.svg',
   },
   openGraph: {
-    title: 'ICU-B Connect | Public Landing',
+    title: 'ICU-B Connect | Clinical CRRT Monitoring Platform',
     description:
-      'Clinical telemetry, workflow clarity, and connector-ready architecture for CRRT monitoring.',
+      'Real-time PrismaFlex monitoring for ICU: treatment visibility, alarm severity, and audit-ready workflow.',
     images: ['/og-image.svg'],
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ICU-B Connect | Public Landing',
+    title: 'ICU-B Connect | Clinical CRRT Monitoring Platform',
     description:
-      'Clinical telemetry, workflow clarity, and connector-ready architecture for CRRT monitoring.',
+      'Real-time PrismaFlex monitoring for ICU: treatment visibility, alarm severity, and audit-ready workflow.',
     images: ['/og-image.svg'],
   },
 };

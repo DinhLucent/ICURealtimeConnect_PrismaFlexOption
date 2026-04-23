@@ -1,0 +1,12 @@
+<svg width="240" height="60" viewBox="0 0 240 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Brand Mark Icon -->
+  <rect x="0" y="8" width="44" height="44" rx="12" fill="#0A7A75"/>
+  <path d="M14 22H30M14 30H30M14 38H22" stroke="white" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Wordmark Text -->
+  <text x="56" y="34" font-family="var(--font-sans), sans-serif" font-weight="700" font-size="22" fill="#0C1A1B" letter-spacing="-0.04em">ICU-B</text>
+  <text x="118" y="34" font-family="var(--font-sans), sans-serif" font-weight="400" font-size="22" fill="#0A7A75" letter-spacing="-0.04em">Connect</text>
+  
+  <!-- Caption -->
+  <text x="56" y="52" font-family="var(--font-mono), monospace" font-weight="500" font-size="9" fill="#667075" letter-spacing="0.12em" text-transform="uppercase">Clinical Monitoring Platform</text>
+</svg>

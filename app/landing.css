@@ -184,13 +184,20 @@
 }
 
 .hero-title,
-.section-title,
-.final-title {
+.section-title {
   margin: 0;
   font-family: var(--font-title), serif;
   font-weight: 400;
   letter-spacing: -0.03em;
-  line-height: 0.95;
+  line-height: 0.92;
+}
+
+.final-title {
+  margin: 0;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
 }
 
 .hero-title {
@@ -201,19 +208,20 @@
 .hero-body,
 .section-body,
 .proof-body,
-.audience-text,
 .annotation-body,
 .final-body,
 .governance-card-body,
 .lens-summary {
   color: var(--muted);
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 .hero-body {
-  max-width: 58ch;
-  margin: 24px 0 0;
-  font-size: 1.06rem;
+  max-width: 54ch;
+  margin: 20px 0 0;
+  font-size: 1.12rem;
+  font-weight: 450;
+  color: var(--muted);
 }
 
 .hero-actions {
@@ -230,12 +238,15 @@
   margin-top: 28px;
 }
 
-.hero-signal-card,
-.rollout-signal-item {
-  border: 1px solid var(--rule);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.74);
-  padding: 14px 16px;
+.hero-signal-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid var(--rule-strong);
+  border-radius: 14px;
+  background: white;
+  padding: 12px 14px;
+  box-shadow: 0 2px 8px rgba(12, 26, 27, 0.03);
 }
 
 .hero-signal-value {
@@ -293,12 +304,19 @@
 }
 
 .diagram-frame {
-  border-radius: 28px;
-  padding: 22px 22px 18px;
+  position: relative;
+  border-radius: 20px;
+  padding: 18px;
+  background: var(--paper-soft);
+  border: 1px solid var(--rule-strong);
 }
 
 .poster-frame {
-  transform: rotate(-1.2deg);
+  padding: 0;
+  border-radius: 16px;
+  box-shadow: var(--shadow-hard);
+  background: #000;
+  line-height: 0;
 }
 
 .diagram-label-row {
@@ -323,14 +341,16 @@
 }
 
 .diagram-node {
-  fill: rgba(255, 255, 255, 0.92);
-  stroke: rgba(16, 42, 44, 0.18);
-  stroke-width: 1;
+  fill: white;
+  stroke: var(--rule-strong);
+  stroke-width: 1.2;
 }
 
 .diagram-node-focus {
-  fill: rgba(15, 159, 152, 0.08);
-  stroke: rgba(15, 159, 152, 0.54);
+  fill: #fff;
+  stroke: var(--accent);
+  stroke-width: 2;
+  filter: drop-shadow(0 4px 12px rgba(10, 122, 117, 0.12));
 }
 
 .diagram-note {
@@ -345,19 +365,25 @@
 }
 
 @keyframes diagram-trace {
+  from {
+    stroke-dashoffset: 80;
+  }
+
   to {
-    stroke-dashoffset: -180;
+    stroke-dashoffset: 0;
   }
 }
 
 .diagram-link-accent {
-  stroke: rgba(15, 159, 152, 0.72);
-  stroke-dasharray: 10 10;
-  animation: diagram-trace 14s linear infinite;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-dasharray: 8 8;
+  animation: diagram-trace 2.5s linear infinite;
 }
 
 .diagram-link-soft {
-  stroke-dasharray: 4 4;
+  stroke: var(--rule-strong);
+  stroke-dasharray: 3 3;
 }
 
 .diagram-title,
@@ -419,18 +445,19 @@
 
 .proof-title,
 .annotation-title,
-.panel-kicker,
 .governance-card-title {
   margin: 0;
   color: var(--ink);
-  font-size: 0.94rem;
+  font-size: 1rem;
   font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .proof-body,
 .governance-card-body {
-  margin: 10px 0 0;
-  font-size: 0.94rem;
+  margin: 8px 0 0;
+  font-size: 0.92rem;
+  color: var(--muted);
 }
 
 .section-shell {
@@ -439,9 +466,9 @@
 
 .section-shell-split {
   display: grid;
-  grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
-  gap: 34px;
-  align-items: start;
+  grid-template-columns: 420px 1fr;
+  gap: 64px;
+  align-items: center;
 }
 
 .section-heading {
@@ -596,11 +623,10 @@
 }
 
 .governance-grid {
-  grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 12px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 0;
 }
 
 .rollout-signal-list {
@@ -630,8 +656,8 @@
 }
 
 .final-title {
-  max-width: 12ch;
-  font-size: clamp(2.8rem, 5vw, 4.8rem);
+  max-width: 22ch;
+  font-size: clamp(2.4rem, 4.2vw, 4.2rem);
 }
 
 .final-body {
@@ -645,6 +671,7 @@
 }
 
 @media (max-width: 1120px) {
+
   .hero-shell,
   .section-shell-split,
   .release-layout,
@@ -712,4 +739,38 @@
   .hero-signal-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ─── Footer ownership ─── */
+.ownership-footer {
+  position: relative;
+  z-index: 1;
+  max-width: 1220px;
+  margin: 64px auto 0;
+  padding: 28px 0 0;
+  border-top: 1px solid var(--rule);
+}
+
+.ownership-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ownership-text {
+  margin: 0;
+  color: var(--soft);
+  font-size: 0.82rem;
+}
+
+.ownership-link {
+  color: var(--muted);
+  font-size: 0.82rem;
+  transition: color 160ms ease;
+}
+
+.ownership-link:hover {
+  color: var(--accent-deep);
 }

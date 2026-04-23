@@ -1,0 +1,68 @@
+<svg width="1000" height="600" viewBox="0 0 1000 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1000" height="600" fill="#F6FBFA"/>
+  
+  <!-- Lanes -->
+  <line x1="0" y1="200" x2="1000" y2="200" stroke="#D8E5E4" stroke-width="1"/>
+  <line x1="0" y1="400" x2="1000" y2="400" stroke="#D8E5E4" stroke-width="1"/>
+
+  <!-- Lane Labels -->
+  <text x="20" y="100" class="lane-label" fill="#5F7275" font-family="Inter" font-size="12" font-weight="bold">ĐIỀU DƯỠNG / NURSE</text>
+  <text x="20" y="300" class="lane-label" fill="#5F7275" font-family="Inter" font-size="12" font-weight="bold">BÁC SĨ / DOCTOR</text>
+  <text x="20" y="500" class="lane-label" fill="#5F7275" font-family="Inter" font-size="12" font-weight="bold">HỆ THỐNG / SYSTEM</text>
+
+  <!-- Flow Elements -->
+  <!-- 1. Alarm Occurs -->
+  <g transform="translate(100, 480)">
+    <rect width="140" height="40" rx="4" fill="#FFFFFF" stroke="#D95C5C" stroke-width="1.5" />
+    <text x="70" y="25" text-anchor="middle" font-family="Inter" font-size="11" fill="#102A2C">Telemetry Alarm detected</text>
+  </g>
+
+  <!-- 2. System Highlights -->
+  <g transform="translate(300, 480)">
+    <rect width="140" height="40" rx="4" fill="#D8F2F0" stroke="#0F9F98" stroke-width="1.5" />
+    <text x="70" y="25" text-anchor="middle" font-family="Inter" font-size="11" fill="#102A2C">Severity Highlighted</text>
+  </g>
+
+  <!-- 3. Nurse Reviews -->
+  <g transform="translate(450, 80)">
+    <rect width="140" height="40" rx="4" fill="#FFFFFF" stroke="#D8E5E4" stroke-width="1.5" />
+    <text x="70" y="25" text-anchor="middle" font-family="Inter" font-size="11" fill="#102A2C">Nurse reviews event</text>
+  </g>
+
+  <!-- 4. Doctor Evaluates -->
+  <g transform="translate(600, 280)">
+    <rect width="160" height="40" rx="4" fill="#FFFFFF" stroke="#D8E5E4" stroke-width="1.5" />
+    <text x="80" y="25" text-anchor="middle" font-family="Inter" font-size="11" fill="#102A2C">Doctor evaluates trends</text>
+  </g>
+
+  <!-- 5. Clinical Action -->
+  <g transform="translate(800, 280)">
+    <rect width="140" height="40" rx="4" fill="#D8F2F0" stroke="#0F9F98" stroke-width="1.5" />
+    <text x="70" y="25" text-anchor="middle" font-family="Inter" font-size="11" fill="#102A2C">Decision / Approval</text>
+  </g>
+
+  <!-- 6. Traceable Record -->
+  <g transform="translate(800, 480)">
+    <rect width="140" height="40" rx="4" fill="#FFFFFF" stroke="#D8E5E4" stroke-width="1.5" stroke-dasharray="4 2" />
+    <text x="70" y="25" text-anchor="middle" font-family="Inter" font-size="11" fill="#102A2C">Audit Trail recorded</text>
+  </g>
+
+  <!-- Connections -->
+  <defs>
+    <marker id="arrow" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto">
+      <polygon points="0 0, 6 2, 0 4" fill="#5F7275" />
+    </marker>
+  </defs>
+
+  <path d="M 240 500 L 295 500" stroke="#5F7275" stroke-width="1" marker-end="url(#arrow)" />
+  <path d="M 370 480 Q 400 450 450 120" stroke="#5F7275" stroke-width="1" fill="none" marker-end="url(#arrow)" />
+  <path d="M 520 120 Q 550 150 630 275" stroke="#5F7275" stroke-width="1" fill="none" marker-end="url(#arrow)" />
+  <path d="M 760 300 L 795 300" stroke="#5F7275" stroke-width="1" marker-end="url(#arrow)" />
+  <path d="M 870 320 L 870 475" stroke="#5F7275" stroke-width="1" marker-end="url(#arrow)" />
+
+  <!-- Titles -->
+  <text x="500" y="40" text-anchor="middle" font-family="Inter" font-size="18" font-weight="bold" fill="#102A2C">Clinical Workflow — ICU-B CONNECT</text>
+  <text x="500" y="580" text-anchor="middle" font-family="Inter" font-size="11" font-style="italic" fill="#5F7275">Closing the loop between machine signals and clinical action</text>
+
+</svg>

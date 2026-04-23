@@ -1,0 +1,20 @@
+<svg width="600" height="80" viewBox="0 0 600 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background (Paper-2) -->
+  <rect width="600" height="80" fill="#FFFFFF"/>
+  
+  <!-- Divider -->
+  <line x1="50" y1="20" x2="550" y2="20" stroke="#D8E5E4" stroke-width="1"/>
+
+  <!-- Logo Placeholder / Wordmark -->
+  <g transform="translate(50, 40)">
+    <rect width="24" height="24" rx="4" fill="#0F9F98"/>
+    <text x="32" y="18" font-family="Inter" font-size="14" font-weight="bold" fill="#102A2C">ICU-B CONNECT</text>
+  </g>
+
+  <!-- Copyright Text -->
+  <text x="550" y="55" text-anchor="end" font-family="Inter" font-size="11" fill="#5F7275">© 2026 ICU-B Connect. Internal Clinical Monitoring Platform. All rights reserved.</text>
+  
+  <!-- Subtext -->
+  <text x="50" y="70" font-family="Inter" font-size="9" fill="#D8E5E4">PRISMAFLEX / CRRT TELEMETRY SYSTEM</text>
+
+</svg>
