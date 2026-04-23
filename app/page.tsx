@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion, useInView } from 'framer-motion';
+import type { LucideIcon } from 'lucide-react';
 import {
   Activity,
   ArrowRight,
@@ -15,9 +16,30 @@ import {
   Workflow,
 } from 'lucide-react';
 
+type LensId = 'clinical' | 'it' | 'management';
+
+type AnnotationItem = {
+  icon: LucideIcon;
+  title: string;
+  body: string;
+};
+
 const repoUrl =
   process.env.NEXT_PUBLIC_REPO_URL ||
   'https://github.com/DinhLucent/PrismaFlex-Monitor-MaxWireLess';
+
+const lensOptions: { id: LensId; label: string }[] = [
+  { id: 'clinical', label: 'Clinical' },
+  { id: 'it', label: 'IT' },
+  { id: 'management', label: 'Management' },
+];
+
+const heroSignals = [
+  { value: '<3s', label: 'Target latency' },
+  { value: '24/7', label: 'Monitoring model' },
+  { value: '4-level', label: 'Alert design' },
+  { value: 'Audit-ready', label: 'Workflow trace' },
+];
 
 const audienceCards = [
   {
@@ -59,6 +81,32 @@ const proofPillars = [
   },
 ];
 
+const valueStages = [
+  { label: 'Raw Telemetry', sub: 'Machine signals enter the system.', width: 620, focus: false },
+  { label: 'Trend Recognition', sub: 'Patterns become legible and comparable.', width: 540, focus: false },
+  { label: 'Alert Awareness', sub: 'Potential issues receive severity and timing.', width: 460, focus: true },
+  { label: 'Clinical Review', sub: 'Staff review context and decide what comes next.', width: 360, focus: false },
+  { label: 'Documented Decision', sub: 'The response becomes part of a durable record.', width: 270, focus: false },
+];
+
+const whyNotes: AnnotationItem[] = [
+  {
+    icon: Activity,
+    title: 'Earlier signal recognition',
+    body: 'The system reframes raw telemetry into a visible operating story instead of disconnected machine values.',
+  },
+  {
+    icon: Workflow,
+    title: 'Workflow continuity',
+    body: 'The alert path leads into review and documentation rather than ending at notification alone.',
+  },
+  {
+    icon: FileCheck2,
+    title: 'Documented action',
+    body: 'Clinical decisions remain connected to the event that triggered them, which improves trust and reviewability.',
+  },
+];
+
 const workflowStages = [
   {
     step: '01',
@@ -85,6 +133,199 @@ const workflowStages = [
     name: 'Signed Record',
     detail: ['The action lands in', 'an auditable record.'],
   },
+];
+
+const workflowLensContent: Record<LensId, { summary: string; notes: AnnotationItem[] }> = {
+  clinical: {
+    summary: 'Clinical lens: emphasize early warning, shared context, and a review step that is easy to follow in a live ICU workflow.',
+    notes: [
+      {
+        icon: HeartPulse,
+        title: 'Early warning visibility',
+        body: 'Trend and alert state should appear before a clinician has to reconstruct what changed from raw device output.',
+      },
+      {
+        icon: ShieldCheck,
+        title: 'Explicit review ownership',
+        body: 'The workflow makes it clear when an event has been seen, reviewed, and either resolved or escalated.',
+      },
+      {
+        icon: FileCheck2,
+        title: 'Treatment continuity',
+        body: 'The response becomes part of the treatment narrative so handoff and retrospective review stay aligned.',
+      },
+    ],
+  },
+  it: {
+    summary: 'IT lens: show a clean event pipeline where machine signal, application state, and durable records remain distinct but connected.',
+    notes: [
+      {
+        icon: ScanLine,
+        title: 'Event normalization',
+        body: 'The monitoring path separates raw ingestion from the application-level state clinicians actually need to consume.',
+      },
+      {
+        icon: Workflow,
+        title: 'Deterministic state flow',
+        body: 'Alerts move through a review sequence that can be reasoned about, logged, and extended without rewriting the whole surface.',
+      },
+      {
+        icon: Network,
+        title: 'Durable handoff point',
+        body: 'The signed record becomes the reliable point for downstream systems, analytics, or governance review.',
+      },
+    ],
+  },
+  management: {
+    summary: 'Management lens: focus on response continuity, operational accountability, and confidence that the workflow can scale without becoming ambiguous.',
+    notes: [
+      {
+        icon: Activity,
+        title: 'Clear escalation path',
+        body: 'The sequence shows where a case becomes attention-worthy and how the system supports a timely human response.',
+      },
+      {
+        icon: ShieldCheck,
+        title: 'Governance checkpoint',
+        body: 'Review and approval are visible as part of the workflow rather than hidden in a separate operational layer.',
+      },
+      {
+        icon: Layers3,
+        title: 'Repeatable operating model',
+        body: 'Because the sequence is explicit, it can be trained, audited, and reused across shifts or future units.',
+      },
+    ],
+  },
+};
+
+const architectureLensContent: Record<LensId, { summary: string; notes: AnnotationItem[] }> = {
+  clinical: {
+    summary: 'Clinical lens: architecture matters because it determines whether the monitoring surface remains readable, stable, and clinically relevant.',
+    notes: [
+      {
+        icon: Activity,
+        title: 'Readable clinical surface',
+        body: 'The workspace is downstream of normalization so clinicians see context-rich status instead of machine-native noise.',
+      },
+      {
+        icon: FileCheck2,
+        title: 'Audit continuity',
+        body: 'The audit layer is treated as a core system concern, which keeps treatment review and record integrity aligned.',
+      },
+      {
+        icon: ShieldCheck,
+        title: 'Safe abstraction boundary',
+        body: 'The diagram communicates operational logic without exposing deployment details that do not belong in a public-facing narrative.',
+      },
+    ],
+  },
+  it: {
+    summary: 'IT lens: the architecture is organized as collection, normalization, workspace, audit, and connector layers so integration points remain legible.',
+    notes: [
+      {
+        icon: ScanLine,
+        title: 'Collection edge',
+        body: 'Device-specific handling stays near ingestion, which protects the rest of the stack from protocol complexity.',
+      },
+      {
+        icon: Layers3,
+        title: 'Layer separation',
+        body: 'Realtime application concerns, durable review state, and external connectors are shown as related but not collapsed into one box.',
+      },
+      {
+        icon: Network,
+        title: 'Connector posture',
+        body: 'External systems appear as extension points, which makes the platform story credible without overclaiming implementation detail.',
+      },
+    ],
+  },
+  management: {
+    summary: 'Management lens: the architecture should read as a governable system, not merely a collection of technologies.',
+    notes: [
+      {
+        icon: ShieldCheck,
+        title: 'Controlled operating surface',
+        body: 'The workspace is framed as a layer with clear inputs and outputs, which supports accountability and scale planning.',
+      },
+      {
+        icon: Activity,
+        title: 'Operational continuity',
+        body: 'Audit and connector layers show how the system supports supervision, review, and future organizational requirements.',
+      },
+      {
+        icon: Layers3,
+        title: 'Expansion readiness',
+        body: 'The layered diagram communicates a platform foundation that can grow without redefining the product story each time.',
+      },
+    ],
+  },
+};
+
+const governanceNotes: AnnotationItem[] = [
+  {
+    icon: ShieldCheck,
+    title: 'Alarm traceability',
+    body: 'Severity, timing, acknowledgement, and action remain part of the same visible event story.',
+  },
+  {
+    icon: Workflow,
+    title: 'Role-based review',
+    body: 'The workflow keeps handoff and approval explicit, which supports structured clinical operations rather than informal workarounds.',
+  },
+  {
+    icon: FileCheck2,
+    title: 'Disconnect awareness',
+    body: 'Continuity matters as much as speed: the system makes monitoring gaps legible instead of silently losing operational context.',
+  },
+];
+
+const governanceBlocks = [
+  {
+    title: 'Alarm traceability',
+    body: 'Critical events remain linked to acknowledgement and follow-up action.',
+  },
+  {
+    title: 'Review boundary',
+    body: 'Roles and approval steps stay visible instead of dissolving into ad-hoc process.',
+  },
+  {
+    title: 'Continuity awareness',
+    body: 'The operating story accounts for disconnection and monitoring gaps, not only success paths.',
+  },
+  {
+    title: 'Treatment history',
+    body: 'The durable record supports retrospective review, training, and governance checks.',
+  },
+];
+
+const rolloutStages = [
+  {
+    phase: 'Phase 1',
+    title: 'Single-unit deployment',
+    detail: ['Establish the core monitoring', 'surface in one ICU environment.'],
+  },
+  {
+    phase: 'Phase 2',
+    title: 'Multi-device monitoring',
+    detail: ['Expand the same operating story', 'across more treatment contexts.'],
+  },
+  {
+    phase: 'Phase 3',
+    title: 'Connector expansion',
+    detail: ['Expose structured outputs for', 'external systems or analytics.'],
+  },
+  {
+    phase: 'Phase 4',
+    title: 'Platform foundation',
+    detail: ['Support future device classes', 'without rewriting the narrative.'],
+  },
+];
+
+const rolloutSignals = [
+  'Single-unit rollout first',
+  'Multi-device expansion next',
+  'Connector-ready integration path',
+  'Future device classes supported by the same model',
 ];
 
 const releaseRules = [
@@ -133,6 +374,59 @@ function SectionHeading({
       <p className="eyebrow">{eyebrow}</p>
       <h2 className="section-title">{title}</h2>
       <p className="section-body">{body}</p>
+    </div>
+  );
+}
+
+function AnnotationStack({
+  summary,
+  items,
+}: {
+  summary?: string;
+  items: AnnotationItem[];
+}) {
+  return (
+    <div>
+      {summary ? <p className="lens-summary">{summary}</p> : null}
+      <div className="annotation-stack">
+        {items.map((item) => (
+          <div key={item.title} className="annotation-item">
+            <item.icon className="h-4 w-4" />
+            <div>
+              <p className="annotation-title">{item.title}</p>
+              <p className="annotation-body">{item.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function LensTabs({
+  activeLens,
+  onChange,
+}: {
+  activeLens: LensId;
+  onChange: (nextLens: LensId) => void;
+}) {
+  return (
+    <div className="lens-switcher">
+      <p className="lens-label">Audience Lens</p>
+      <div className="lens-tabs" role="tablist" aria-label="Audience lens">
+        {lensOptions.map((lens) => (
+          <button
+            key={lens.id}
+            type="button"
+            role="tab"
+            aria-selected={activeLens === lens.id}
+            className={activeLens === lens.id ? 'lens-tab lens-tab-active' : 'lens-tab'}
+            onClick={() => onChange(lens.id)}
+          >
+            {lens.label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
@@ -208,12 +502,47 @@ function HeroDiagram() {
   );
 }
 
-function WorkflowDiagram() {
+function ValueDiagram() {
+  return (
+    <div className="diagram-frame value-frame">
+      <div className="diagram-label-row">
+        <span className="diagram-tag">Pyramid / Funnel</span>
+        <span className="diagram-meta">Raw signal to documented decision</span>
+      </div>
+      <svg viewBox="0 0 760 420" className="diagram-svg" aria-label="Why it matters funnel">
+        {valueStages.map((stage, index) => {
+          const x = 380 - stage.width / 2;
+          const y = 40 + index * 68;
+          const rectClass = stage.focus ? 'diagram-node diagram-node-focus' : 'diagram-node';
+          return (
+            <g key={stage.label}>
+              <rect x={x} y={y} width={stage.width} height="48" rx="10" className={rectClass} />
+              <text x="380" y={y + 20} textAnchor="middle" className="diagram-title">
+                {stage.label}
+              </text>
+              <text x="380" y={y + 37} textAnchor="middle" className="diagram-copy">
+                {stage.sub}
+              </text>
+              {index < valueStages.length - 1 ? (
+                <path
+                  d={`M380 ${y + 48} V ${y + 68}`}
+                  className={stage.focus ? 'diagram-link diagram-link-accent' : 'diagram-link diagram-link-soft'}
+                />
+              ) : null}
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+}
+
+function WorkflowDiagram({ lensLabel }: { lensLabel: string }) {
   return (
     <div className="diagram-frame workflow-frame">
       <div className="diagram-label-row">
         <span className="diagram-tag">Sequence</span>
-        <span className="diagram-meta">From signal to signed action</span>
+        <span className="diagram-meta">{lensLabel} lens active</span>
       </div>
       <svg
         viewBox="0 0 980 320"
@@ -231,7 +560,9 @@ function WorkflowDiagram() {
                 cx={x}
                 cy={132}
                 r={14}
-                className={highlight ? 'diagram-step-dot diagram-step-dot-focus' : 'diagram-step-dot'}
+                className={
+                  highlight ? 'diagram-step-dot diagram-step-dot-focus' : 'diagram-step-dot'
+                }
               />
               <line x1={x} y1="146" x2={x} y2="246" className="diagram-link diagram-link-soft" />
               <rect
@@ -242,7 +573,14 @@ function WorkflowDiagram() {
                 rx="10"
                 className={highlight ? 'diagram-node diagram-node-focus' : 'diagram-node'}
               />
-              <rect x={x - 84} y="176" width="168" height="84" rx="10" className="diagram-node diagram-note" />
+              <rect
+                x={x - 84}
+                y="176"
+                width="168"
+                height="84"
+                rx="10"
+                className="diagram-node diagram-note"
+              />
               <text x={x - 44} y="54" className="diagram-step-label">
                 {stage.step}
               </text>
@@ -264,12 +602,12 @@ function WorkflowDiagram() {
   );
 }
 
-function ArchitectureDiagram() {
+function ArchitectureDiagram({ lensLabel }: { lensLabel: string }) {
   return (
     <div className="diagram-frame architecture-frame">
       <div className="diagram-label-row">
         <span className="diagram-tag">Architecture</span>
-        <span className="diagram-meta">Editorial system map</span>
+        <span className="diagram-meta">{lensLabel} lens active</span>
       </div>
       <svg
         viewBox="0 0 920 420"
@@ -318,7 +656,100 @@ function ArchitectureDiagram() {
   );
 }
 
+function GovernanceDiagram() {
+  return (
+    <div className="diagram-frame governance-frame">
+      <div className="diagram-label-row">
+        <span className="diagram-tag">Layers / Matrix</span>
+        <span className="diagram-meta">Safety and operational controls</span>
+      </div>
+      <svg viewBox="0 0 780 360" className="diagram-svg" aria-label="Governance and safety map">
+        <rect x="46" y="54" width="284" height="98" rx="12" className="diagram-node diagram-node-focus" />
+        <rect x="450" y="54" width="284" height="98" rx="12" className="diagram-node" />
+        <rect x="46" y="210" width="284" height="98" rx="12" className="diagram-node" />
+        <rect x="450" y="210" width="284" height="98" rx="12" className="diagram-node" />
+        <path d="M330 103 H450" className="diagram-link diagram-link-accent" />
+        <path d="M188 152 V210" className="diagram-link diagram-link-soft" />
+        <path d="M592 152 V210" className="diagram-link diagram-link-soft" />
+
+        <text x="72" y="88" className="diagram-title">Alarm Traceability</text>
+        <text x="72" y="112" className="diagram-copy">Severity, timing, acknowledgement</text>
+        <text x="72" y="130" className="diagram-copy">and action remain linked.</text>
+
+        <text x="476" y="88" className="diagram-title">Role Review</text>
+        <text x="476" y="112" className="diagram-copy">Review and approval are visible</text>
+        <text x="476" y="130" className="diagram-copy">as structured workflow states.</text>
+
+        <text x="72" y="244" className="diagram-title">Disconnect Awareness</text>
+        <text x="72" y="268" className="diagram-copy">Continuity gaps surface as</text>
+        <text x="72" y="286" className="diagram-copy">operational information.</text>
+
+        <text x="476" y="244" className="diagram-title">Treatment History</text>
+        <text x="476" y="268" className="diagram-copy">Durable records support review,</text>
+        <text x="476" y="286" className="diagram-copy">training, and governance checks.</text>
+      </svg>
+    </div>
+  );
+}
+
+function RolloutDiagram() {
+  return (
+    <div className="diagram-frame rollout-frame">
+      <div className="diagram-label-row">
+        <span className="diagram-tag">Tree / Rollout Map</span>
+        <span className="diagram-meta">From focused deployment to platform</span>
+      </div>
+      <svg viewBox="0 0 980 340" className="diagram-svg" aria-label="Expansion and rollout path">
+        <line x1="118" y1="118" x2="862" y2="118" className="diagram-link diagram-link-accent" />
+        {rolloutStages.map((stage, index) => {
+          const x = 120 + index * 248;
+          const boxX = x - 88;
+          const isFocus = index < 2;
+
+          return (
+            <g key={stage.phase}>
+              <circle
+                cx={x}
+                cy={118}
+                r={16}
+                className={isFocus ? 'diagram-step-dot diagram-step-dot-focus' : 'diagram-step-dot'}
+              />
+              <line x1={x} y1="134" x2={x} y2="186" className="diagram-link diagram-link-soft" />
+              <rect
+                x={boxX}
+                y="186"
+                width="176"
+                height="108"
+                rx="12"
+                className={isFocus ? 'diagram-node diagram-node-focus' : 'diagram-node'}
+              />
+              <text x={boxX + 18} y="212" className="diagram-step-label">
+                {stage.phase}
+              </text>
+              <text x={boxX + 18} y="234" className="diagram-title">
+                {stage.title}
+              </text>
+              <text x={boxX + 18} y="258" className="diagram-copy">
+                {stage.detail.map((line, lineIndex) => (
+                  <tspan key={line} x={boxX + 18} dy={lineIndex === 0 ? 0 : 16}>
+                    {line}
+                  </tspan>
+                ))}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+}
+
 export default function LandingPage() {
+  const [activeLens, setActiveLens] = React.useState<LensId>('clinical');
+  const activeLensLabel = lensOptions.find((lens) => lens.id === activeLens)?.label ?? 'Clinical';
+  const workflowLens = workflowLensContent[activeLens];
+  const architectureLens = architectureLensContent[activeLens];
+
   return (
     <main className="marketing-shell">
       <div className="ambient-orb ambient-orb-left" />
@@ -334,9 +765,10 @@ export default function LandingPage() {
         </div>
 
         <nav className="nav-links" aria-label="Primary">
+          <a href="#value">Why It Matters</a>
           <a href="#workflow">Workflow</a>
           <a href="#architecture">Architecture</a>
-          <a href="#release">Release posture</a>
+          <a href="#rollout">Rollout</a>
         </nav>
 
         <a href={repoUrl} target="_blank" rel="noreferrer" className="nav-cta">
@@ -366,6 +798,15 @@ export default function LandingPage() {
             </a>
           </div>
 
+          <div className="hero-signal-grid">
+            {heroSignals.map((signal) => (
+              <div key={signal.label} className="hero-signal-card">
+                <p className="hero-signal-value">{signal.value}</p>
+                <p className="hero-signal-label">{signal.label}</p>
+              </div>
+            ))}
+          </div>
+
           <div className="hero-audience-row">
             <span>Clinicians</span>
             <span>Biomedical engineers</span>
@@ -390,6 +831,21 @@ export default function LandingPage() {
             <p className="proof-body">{pillar.body}</p>
           </Reveal>
         ))}
+      </section>
+
+      <section id="value" className="section-shell section-shell-split value-shell">
+        <Reveal className="section-copy">
+          <SectionHeading
+            eyebrow="Why It Matters"
+            title="Raw telemetry becomes operational clinical logic."
+            body="The system does not stop at data capture. It translates machine signals into trends, alert awareness, review workflow, and durable clinical action."
+          />
+          <AnnotationStack items={whyNotes} />
+        </Reveal>
+
+        <Reveal delay={0.12}>
+          <ValueDiagram />
+        </Reveal>
       </section>
 
       <section className="section-shell">
@@ -426,39 +882,12 @@ export default function LandingPage() {
             title="From signal to signed action."
             body="This section is designed to work in both a landing page and a presentation. It shows the operating sequence instead of a feature checklist."
           />
-          <div className="annotation-stack">
-            <div className="annotation-item">
-              <Workflow className="h-4 w-4" />
-              <div>
-                <p className="annotation-title">Signal framing</p>
-                <p className="annotation-body">
-                  Show telemetry as a clinical event, not as raw device noise.
-                </p>
-              </div>
-            </div>
-            <div className="annotation-item">
-              <ShieldCheck className="h-4 w-4" />
-              <div>
-                <p className="annotation-title">Accountable review</p>
-                <p className="annotation-body">
-                  Keep the approval step explicit so the workflow communicates ownership.
-                </p>
-              </div>
-            </div>
-            <div className="annotation-item">
-              <FileCheck2 className="h-4 w-4" />
-              <div>
-                <p className="annotation-title">Auditable continuity</p>
-                <p className="annotation-body">
-                  Treat the record as the end state of the decision, not an afterthought.
-                </p>
-              </div>
-            </div>
-          </div>
+          <LensTabs activeLens={activeLens} onChange={setActiveLens} />
+          <AnnotationStack summary={workflowLens.summary} items={workflowLens.notes} />
         </Reveal>
 
         <Reveal delay={0.12}>
-          <WorkflowDiagram />
+          <WorkflowDiagram lensLabel={activeLensLabel} />
         </Reveal>
       </section>
 
@@ -469,39 +898,57 @@ export default function LandingPage() {
             title="A product diagram that engineers can trust."
             body="The technical story is expressed as a clean set of layers: collection, normalization, clinical workspace, audit continuity, and external connectors."
           />
-          <div className="annotation-stack">
-            <div className="annotation-item">
-              <ScanLine className="h-4 w-4" />
-              <div>
-                <p className="annotation-title">Collection edge</p>
-                <p className="annotation-body">
-                  Device-specific logic stays at the boundary, not inside the user-facing narrative.
-                </p>
+          <LensTabs activeLens={activeLens} onChange={setActiveLens} />
+          <AnnotationStack summary={architectureLens.summary} items={architectureLens.notes} />
+        </Reveal>
+
+        <Reveal delay={0.12}>
+          <ArchitectureDiagram lensLabel={activeLensLabel} />
+        </Reveal>
+      </section>
+
+      <section id="governance" className="section-shell section-shell-split governance-shell">
+        <Reveal className="section-copy">
+          <SectionHeading
+            eyebrow="Governance & Safety"
+            title="Fast is not enough. The system also has to be reviewable."
+            body="This part of the landing is aimed at healthcare specialists and technical management who need operational confidence, not just realtime performance."
+          />
+          <AnnotationStack items={governanceNotes} />
+        </Reveal>
+
+        <Reveal delay={0.12}>
+          <GovernanceDiagram />
+        </Reveal>
+
+        <div className="governance-grid">
+          {governanceBlocks.map((block, index) => (
+            <Reveal key={block.title} delay={index * 0.06} className="governance-card">
+              <p className="governance-card-title">{block.title}</p>
+              <p className="governance-card-body">{block.body}</p>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      <section id="rollout" className="section-shell section-shell-split rollout-shell">
+        <Reveal className="section-copy">
+          <SectionHeading
+            eyebrow="Expansion & Rollout"
+            title="A platform story, not a one-off screen."
+            body="The rollout path starts focused and grows outward: one environment, more devices, more connectors, and more operating contexts over time."
+          />
+          <div className="rollout-signal-list">
+            {rolloutSignals.map((signal) => (
+              <div key={signal} className="rollout-signal-item">
+                {signal}
               </div>
-            </div>
-            <div className="annotation-item">
-              <Layers3 className="h-4 w-4" />
-              <div>
-                <p className="annotation-title">Operational separation</p>
-                <p className="annotation-body">
-                  The clinical workspace and the audit layer stay related, but they are not the same concern.
-                </p>
-              </div>
-            </div>
-            <div className="annotation-item">
-              <Activity className="h-4 w-4" />
-              <div>
-                <p className="annotation-title">Connector posture</p>
-                <p className="annotation-body">
-                  External systems are shown as extension points, which keeps the public story accurate and safe.
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
         </Reveal>
 
         <Reveal delay={0.12}>
-          <ArchitectureDiagram />
+          <RolloutDiagram />
         </Reveal>
       </section>
 

@@ -92,7 +92,8 @@
 
 .nav-links {
   display: flex;
-  gap: 24px;
+  flex-wrap: wrap;
+  gap: 18px;
   color: var(--muted);
   font-size: 0.92rem;
 }
@@ -202,7 +203,9 @@
 .proof-body,
 .audience-text,
 .annotation-body,
-.final-body {
+.final-body,
+.governance-card-body,
+.lens-summary {
   color: var(--muted);
   line-height: 1.7;
 }
@@ -220,11 +223,39 @@
   margin-top: 30px;
 }
 
+.hero-signal-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.hero-signal-card,
+.rollout-signal-item {
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.74);
+  padding: 14px 16px;
+}
+
+.hero-signal-value {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.hero-signal-label {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
 .hero-audience-row {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 28px;
+  margin-top: 24px;
 }
 
 .hero-audience-row span,
@@ -253,7 +284,8 @@
 .proof-item,
 .audience-card,
 .release-panel,
-.release-note {
+.release-note,
+.governance-card {
   border: 1px solid var(--rule);
   background: rgba(255, 255, 255, 0.76);
   backdrop-filter: blur(16px);
@@ -312,8 +344,16 @@
   stroke-linecap: round;
 }
 
+@keyframes diagram-trace {
+  to {
+    stroke-dashoffset: -180;
+  }
+}
+
 .diagram-link-accent {
-  stroke: rgba(15, 159, 152, 0.7);
+  stroke: rgba(15, 159, 152, 0.72);
+  stroke-dasharray: 10 10;
+  animation: diagram-trace 14s linear infinite;
 }
 
 .diagram-link-soft {
@@ -371,21 +411,24 @@
 .proof-item,
 .audience-card,
 .release-panel,
-.release-note {
+.release-note,
+.governance-card {
   border-radius: 22px;
   padding: 22px;
 }
 
 .proof-title,
 .annotation-title,
-.panel-kicker {
+.panel-kicker,
+.governance-card-title {
   margin: 0;
   color: var(--ink);
   font-size: 0.94rem;
   font-weight: 600;
 }
 
-.proof-body {
+.proof-body,
+.governance-card-body {
   margin: 10px 0 0;
   font-size: 0.94rem;
 }
@@ -470,10 +513,65 @@
   background: var(--accent);
 }
 
+.lens-switcher {
+  margin-top: 28px;
+  padding: 18px;
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.lens-label {
+  margin: 0 0 10px;
+  color: var(--accent-deep);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.lens-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.lens-tab {
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: white;
+  color: var(--muted);
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.lens-tab:hover {
+  transform: translateY(-1px);
+  border-color: rgba(15, 159, 152, 0.32);
+  color: var(--ink);
+}
+
+.lens-tab-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.lens-summary {
+  margin: 18px 0 0;
+  font-size: 0.94rem;
+}
+
 .annotation-stack {
   display: grid;
   gap: 14px;
-  margin-top: 28px;
+  margin-top: 20px;
 }
 
 .annotation-item {
@@ -491,8 +589,24 @@
   font-size: 0.94rem;
 }
 
-.architecture-shell .section-title {
-  max-width: 12ch;
+.governance-shell .section-copy,
+.value-shell .section-copy,
+.rollout-shell .section-copy {
+  position: relative;
+}
+
+.governance-grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.rollout-signal-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 28px;
 }
 
 .release-layout {
@@ -534,7 +648,8 @@
   .hero-shell,
   .section-shell-split,
   .release-layout,
-  .proof-band {
+  .proof-band,
+  .governance-grid {
     grid-template-columns: 1fr;
   }
 
@@ -544,6 +659,10 @@
 
   .audience-grid {
     grid-template-columns: 1fr;
+  }
+
+  .hero-signal-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -560,7 +679,6 @@
   .nav-links {
     order: 3;
     width: 100%;
-    justify-content: space-between;
     gap: 12px;
     font-size: 0.84rem;
   }
@@ -584,7 +702,14 @@
   .proof-item,
   .audience-card,
   .release-panel,
-  .release-note {
+  .release-note,
+  .governance-card {
     border-radius: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-signal-grid {
+    grid-template-columns: 1fr;
   }
 }
