@@ -8,7 +8,20 @@ This repo is intentionally separated from the main application so it can be publ
 
 - product-level messaging for clinicians, health operations, and IT teams
 - public-safe diagrams for workflow and architecture
+- an image-first landing page built from approved PrismaFlex and dashboard visuals
 - static export configuration for GitHub Pages or Vercel
+
+## Current landing direction
+
+The homepage is structured as a simple clinical presentation page:
+
+- hero: PrismaFlex device signal to reviewable clinical action
+- monitoring: central telemetry, device cards, alarm queue, pressure trends
+- workflow: signal, detection, nurse review, doctor decision, approval, record
+- journal and analysis: treatment chronology, audit trail, analyzer context
+- architecture and governance: collector, Mirth, backend, UI, review controls
+
+Final web assets used by the page live in `public/assets/`. Source/reference visuals can stay in `img/` during design iteration, but the exported site should reference only public-safe assets.
 
 ## What this repo should never contain
 

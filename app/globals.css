@@ -1,19 +1,39 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #f8faf9;
-  --paper-soft: #f2f6f5;
-  --paper-deep: #ebf0ef;
-  --ink: #0c1a1b;
-  --muted: #4a5859;
-  --soft: #869495;
-  --rule: rgba(12, 26, 27, 0.08);
-  --rule-strong: rgba(12, 26, 27, 0.14);
-  --accent: #0a7a75;
-  --accent-deep: #08635f;
-  --shadow-soft: 0 4px 20px -4px rgba(12, 26, 27, 0.05);
-  --shadow-hard: 0 12px 36px -8px rgba(12, 26, 27, 0.12);
-  --shadow-focus: 0 0 0 4px rgba(10, 122, 117, 0.12);
+  --bg: #f7fbfc;
+  --bg-soft: #eaf5f7;
+  --surface: #ffffff;
+  --ink: #0f2346;
+  --text: #53687a;
+  --muted: #7e93a5;
+  --teal: #0d9f99;
+  --teal-deep: #087b77;
+  --line: #d7e4e8;
+  --alert: #e86767;
+
+  --paper: var(--bg);
+  --paper-soft: var(--bg-soft);
+  --paper-deep: #dfecef;
+  --soft: #95a7b5;
+
+  /* Typography Scale - Normalized for Clarity */
+  --font-size-hero: clamp(3rem, 5vw, 4rem);
+  --font-size-section: clamp(2.25rem, 4vw, 3rem);
+  --font-size-body: 1.1rem;
+  --font-size-eyebrow: 0.85rem;
+
+  --rule: rgba(15, 35, 70, 0.08);
+  --rule-strong: rgba(15, 35, 70, 0.14);
+  --accent: var(--teal);
+  --accent-deep: var(--teal-deep);
+  --accent-blue: #1597d8;
+
+  --shadow-soft: 0 12px 32px -20px rgba(15, 35, 70, 0.12);
+  --shadow-hard: 0 24px 64px -32px rgba(15, 35, 70, 0.24);
+  --shadow-focus: 0 0 0 4px rgba(13, 159, 153, 0.14);
+  --radius-card: 24px;
+  --radius-inner: 16px;
 }
 
 * {
@@ -28,11 +48,13 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at top left, rgba(15, 159, 152, 0.08), transparent 32%),
-    radial-gradient(circle at bottom right, rgba(15, 159, 152, 0.06), transparent 28%),
-    var(--paper);
+    radial-gradient(circle at top left, rgba(13, 159, 153, 0.08), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(21, 151, 216, 0.08), transparent 22%),
+    var(--bg);
   color: var(--ink);
   font-family: var(--font-sans), system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
