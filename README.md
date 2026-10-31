@@ -1,65 +1,110 @@
-# ICU-B Connect Public Site
+# ICU-B Connect — Real-Time ICU Telemetry & CRRT Clinical Dashboard
 
-Standalone public landing page for the ICU-B Connect project.
+Web platform and architectural specification for real-time telemetry, alarm triage, and clinical decision support for Baxter Prismaflex Continuous Renal Replacement Therapy (CRRT) machines in Intensive Care Units (ICU).
 
-This repo is intentionally separated from the main application so it can be published safely as a marketing and presentation surface.
+![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=nextdotjs)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=flat-square&logo=tailwind-css)
+![Device](https://img.shields.io/badge/Device-Baxter_Prismaflex_CRRT-DC2626?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-0D9488?style=flat-square)
 
-## What this repo contains
+---
 
-- product-level messaging for clinicians, health operations, and IT teams
-- public-safe diagrams for workflow and architecture
-- an image-first landing page built from approved PrismaFlex and dashboard visuals
-- static export configuration for GitHub Pages or Vercel
+## Clinical Telemetry Interface
 
-## Current landing direction
+The web interface centralizes telemetry from isolated dialysis machines at patient bedsides into a unified clinical workstation dashboard. Clinicians monitor transmembrane pressure (TMP), filter clotting indicators, fluid balance, and alarm states in real time.
 
-The homepage is structured as a simple clinical presentation page:
+<div align="center">
+  <img src="public/assets/hero-flagship-dashboard-prismaflex.png" alt="ICU-B Connect Flagship Clinical Dashboard" width="95%" />
+</div>
 
-- hero: PrismaFlex device signal to reviewable clinical action
-- monitoring: central telemetry, device cards, alarm queue, pressure trends
-- workflow: signal, detection, nurse review, doctor decision, approval, record
-- journal and analysis: treatment chronology, audit trail, analyzer context
-- architecture and governance: collector, Mirth, backend, UI, review controls
+---
 
-Final web assets used by the page live in `public/assets/`. Source/reference visuals can stay in `img/` during design iteration, but the exported site should reference only public-safe assets.
+## 3-Tier Telemetry Architecture
 
-## What this repo should never contain
+```mermaid
+graph LR
+    A[🏥 Baxter Prismaflex Machine] -->|Optical RS-232 Serial| B(🖥️ Edge Windows Collector)
+    B -->|Structured JSON / HL7| C(🔄 Mirth Connect Integration Bridge)
+    C -->|REST / WebSocket| D[🚀 Clinical Backend Core]
+    D -->|Real-time Stream| E[📊 Next.js ICU-B Telemetry Webapp]
+```
 
-- patient data or screenshots with real clinical information
-- internal deployment scripts, secrets, or private endpoints
-- hospital-only identifiers unless explicitly approved for public use
+1. **Edge Acquisition (Tier 1)**: Hardware interface connected to the Prismaflex serial diagnostic port. Captures raw flow rates, pressure sensor readings (arterial, venous, pre-filter, effluent), and machine alert states.
+2. **Integration Bridge (Tier 2)**: Mirth Connect channel broker standardizing edge frames into validated HL7/JSON clinical structures across protected hospital network segments.
+3. **Clinical Presentation (Tier 3)**: Next.js App Router application delivering responsive vitals curves, threshold notifications, and treatment history to nursing stations and attending physicians.
 
-## Local run
+<div align="center">
+  <img src="public/assets/diagram-system-architecture-prismaflex.svg" alt="System Architecture Diagram" width="90%" />
+</div>
+
+---
+
+## Clinical Workflow & Decision Support
+
+The platform models the complete bedside care pathway: raw machine telemetry is analyzed for physiological anomalies, presented for nurse review, validated by intensive care physicians, and archived into clinical records.
+
+<div align="center">
+  <img src="public/assets/diagram-clinical-workflow-prismaflex.svg" alt="Clinical Workflow Diagram" width="90%" />
+</div>
+
+---
+
+## Deep Analytics & Treatment Verification
+
+<table width="100%">
+  <tr>
+    <td width="50%" align="center">
+      <b>Treatment Analyzer & Pressure Waveforms</b><br/>
+      <img src="public/assets/treatment-analyzer-deep.png" alt="Treatment Analyzer" width="100%" />
+    </td>
+    <td width="50%" align="center">
+      <b>Clinical Review & Event Journal</b><br/>
+      <img src="public/assets/treatment-journal-review.png" alt="Treatment Journal Review" width="100%" />
+    </td>
+  </tr>
+</table>
+
+---
+
+## Safety & Compliance Disclosure
+
+- **Privacy Guaranteed**: This repository contains strictly simulated, de-identified parameters and synthetic waveforms. Zero Protected Health Information (PHI) or hospital identifiers are retained or transmitted.
+- **Independent Interface**: Designed as an auxiliary monitoring and telemetry viewer to assist medical staff; never alters active dialysis pump settings or replaces primary bedside machine alarms.
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18.17 or higher
+- npm or pnpm
+
+### Installation & Local Run
 
 ```bash
+git clone https://github.com/DinhLucent/ICURealtimeConnect_PrismaFlexOption.git
+cd ICURealtimeConnect_PrismaFlexOption
 npm install
 npm run dev
 ```
 
-## Production build
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Production Static Export
 
 ```bash
 npm run build
 ```
 
-The output is exported statically through Next.js.
+Generates a static web bundle in `out/`, pre-configured for automated deployment via GitHub Actions (`.github/workflows/deploy-pages.yml`) or Vercel.
 
-## Deploy to GitHub Pages
+---
 
-1. Create a new GitHub repository from this folder.
-2. Push the `main` branch to that repository.
-3. In GitHub repo settings, enable `Pages` with `GitHub Actions` as the source.
-4. The included workflow at `.github/workflows/deploy-pages.yml` will publish the `out/` export on every push to `main`.
+## License
 
-## Deploy to Vercel
+MIT License. Copyright (c) 2022-present Đinh Hoàng Sáng.
 
-1. Import the repository into Vercel.
-2. Keep the default Next.js build settings.
-3. Optional: set `NEXT_PUBLIC_REPO_URL` to your final public repository or project page.
-4. Optional but recommended: set `NEXT_PUBLIC_SITE_URL` to the deployed site origin for correct Open Graph and Twitter metadata.
-
-## Optional environment variables
-
-- `NEXT_PUBLIC_REPO_URL`: primary external CTA for the public repository or project page
-- `NEXT_PUBLIC_BASE_PATH`: override base path for GitHub Pages deployment
-- `NEXT_PUBLIC_SITE_URL`: canonical deployed origin such as `https://your-org.github.io/your-repo`
+---
+Built by [DinhLucent](https://github.com/DinhLucent)
